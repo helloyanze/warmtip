@@ -1,0 +1,337 @@
+/* 基础样式重置 */
+* {
+    margin: 0;
+  
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  
+  body {
+    font-family: 'Noto Sans SC', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+  
+    overflow: hidden;
+    position: relative;
+  
+  }
+  
+  #app {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+  }
+
+  /* 主标题样式 */
+  #main-title {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Ma Shan Zheng', cursive;
+    font-size: 2.5rem;
+    font-weight: 400;
+    color: rgb(22, 188, 194);
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+    pointer-events: none;
+    user-select: none;
+    white-space: nowrap;
+  }
+  
+  /* 模态框背景 */
+  .modal-backdrop {
+    position: fixed;
+  
+    top: 0;
+  
+    left: 0;
+  
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+  
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+  }
+  
+  /* 模态框 */
+  .modal {
+    background: white;
+  
+    border-radius: 15px;
+    padding: 30px;
+  
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+  
+    animation: modalSlideIn 0.5s ease-out;
+  }
+  
+  @keyframes modalSlideIn {
+    from {
+  
+      opacity: 0;
+      transform: translateY(-50px) scale(0.9);
+    }
+  
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+  
+  .titlebar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  
+  }
+  
+  
+  .icon {
+  
+    font-size: 2.5rem;
+    margin-right: 10px;
+  }
+  
+  
+  .title {
+    font-size: 1.8rem;
+  
+    font-weight: 800;
+    color: #333;
+  }
+  
+  .content {
+  
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 30px;
+  
+    line-height: 1.6;
+  }
+  
+  .actions {
+    display: flex;
+    justify-content: center;
+  
+    gap: 15px;
+  }
+  
+  
+  .btn {
+    padding: 12px 30px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: 600;
+  
+    cursor: pointer;
+    transition: all 0.3s ease;
+    outline: none;
+  
+  }
+  
+  .btn.primary {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+  
+    color: white;
+  }
+  
+  .btn.primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+  
+  }
+  
+  .btn.primary:active {
+    transform: translateY(0);
+  }
+  
+  
+  /* 弹窗层 */
+  #popup-layer {
+    position: fixed;
+  
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  
+    pointer-events: none;
+    z-index: 999;
+  
+  }
+  
+  
+  /* 弹窗样式 */
+  .popup {
+    position: absolute;
+    background: white;
+    border-radius: 10px;
+    padding: 15px 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    animation: popupFadeIn 0.5s ease-out;
+    pointer-events: auto;
+    max-width: 200px;
+    text-align: center;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    z-index: 1;
+  
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .popup:hover {
+    transform: scale(1.05);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    z-index: 2;
+  
+  }
+  
+  @keyframes popupFadeIn {
+    from {
+      opacity: 0;
+      transform: scale(0.8) translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+  
+    }
+  }
+  
+  .popup-content {
+  
+    font-size: 14px;
+    font-weight: 600;
+  
+    color: #333;
+  }
+  
+  /* 浮动小球 */
+  #float-balls {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 1001;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .float-ball {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+  
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    text-decoration: none;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  
+  }
+  
+  .float-ball:hover {
+    transform: translateY(-5px) scale(1.1);
+  
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+    background: rgba(255, 255, 255, 1);
+  }
+  
+  .float-ball span {
+    font-size: 12px;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  
+  
+  /* 响应式设计 */
+  @media (max-width: 768px) {
+    #main-title {
+      font-size: 2.5rem;
+    }
+    
+    .modal {
+      padding: 20px;
+      margin: 20px;
+    }
+    
+    .title {
+      font-size: 1.5rem;
+    }
+    
+    .icon {
+      font-size: 2rem;
+  
+    }
+    
+    .content {
+      font-size: 1rem;
+    }
+    
+    .btn {
+      padding: 10px 25px;
+      font-size: 0.9rem;
+    }
+  
+    
+    #float-balls {
+      bottom: 20px;
+  
+      right: 20px;
+    }
+  
+    
+    .float-ball {
+      width: 50px;
+      height: 50px;
+    }
+    
+    .float-ball span {
+  
+      font-size: 11px;
+    }
+  
+  }
+  
+  @media (max-width: 480px) {
+    #main-title {
+      font-size: 2rem;
+    }
+    
+    .modal {
+      padding: 15px;
+    }
+    
+    .title {
+      font-size: 1.3rem;
+    }
+    
+    .icon {
+      font-size: 1.8rem;
+    }
+    
+    .content {
+      font-size: 0.9rem;
+    }
+    
+    .btn {
+      padding: 8px 20px;
+      font-size: 0.8rem;
+    }
+  }
