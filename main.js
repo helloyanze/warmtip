@@ -56,11 +56,26 @@ class MysteryGiftApp {
       // 心形相关
       this.heartShapePoints = [];
       this.heartShapeIndex = 0;
-      this.heartShapeCount = 50; // 心形需要的气泡数量（减少点数避免重叠）
+      this.heartShapeCount = 40; // 心形需要的气泡数量（平衡凹凸部分和整体间距）
       this.heartShapeCompleted = false;
       
       this.generateHeartShape();
       this.init();
+    }
+    
+    // 获取气泡尺寸（根据屏幕大小自适应）
+    getPopupSize() {
+      const screenWidth = window.innerWidth;
+      if (screenWidth <= 480) {
+        // 小屏手机
+        return { width: 120, height: 50 };
+      } else if (screenWidth <= 768) {
+        // 平板或大屏手机
+        return { width: 150, height: 60 };
+      } else {
+        // 桌面端
+        return { width: 200, height: 80 };
+      }
     }
     
     // 生成心形坐标点
@@ -69,20 +84,34 @@ class MysteryGiftApp {
       const screenWidth = window.innerWidth;
       const screenHeight = window.innerHeight;
       
-      // 气泡的实际尺寸
-      const popupWidth = 200;
-      const popupHeight = 80;
+      // 获取气泡的实际尺寸（响应式）
+      const popupSize = this.getPopupSize();
+      const popupWidth = popupSize.width;
+      const popupHeight = popupSize.height;
       
-      // 计算心形的大小（增大心形尺寸，让气泡分布更分散）
+      // 计算心形的大小（考虑气泡尺寸，优化心形显示）
+      // 气泡是横向矩形（200x80），需要让心形足够大以容纳气泡
       const minDimension = Math.min(screenWidth, screenHeight);
-      const heartBaseSize = minDimension * 0.75; // 心形基础大小约为屏幕的75%，增大尺寸避免重叠
+      // 考虑气泡宽度，心形需要足够大以避免边界问题
+      const availableWidth = screenWidth - popupWidth;
+      const availableHeight = screenHeight - popupHeight;
+      const maxHeartSize = Math.min(availableWidth, availableHeight) * 0.9;
       
       // 心形参数方程：x = 16sin³(t), y = 13cos(t) - 5cos(2t) - 2cos(3t) - cos(4t)
-      // 在参数方程中，x的范围是-16到16（总宽度32），y的范围大约是-13到13（总高度26）
+      // 在参数方程中，x的范围是-16到16（总宽度32），y的范围大约是-13到13（总高度约26）
       const heartParamWidth = 32; // 参数方程中的宽度
-      const scale = heartBaseSize / heartParamWidth;
+      const heartParamHeight = 26; // 参数方程中的高度（近似值）
       
-      // 生成心形点（均匀分布，避免重叠）
+      // 根据可用空间计算缩放比例，确保心形完全显示
+      const scaleX = maxHeartSize / heartParamWidth;
+      const scaleY = maxHeartSize / heartParamHeight;
+      const scale = Math.min(scaleX, scaleY) * 0.75; // 使用较小的缩放并稍微缩小，确保有边距
+      
+      // 居中显示
+      const centerX = screenWidth / 2;
+      const centerY = screenHeight / 2;
+      
+      // 生成心形点（均匀分布，考虑气泡尺寸）
       for (let i = 0; i < this.heartShapeCount; i++) {
         const t = (i / this.heartShapeCount) * 2 * Math.PI;
         
@@ -94,18 +123,17 @@ class MysteryGiftApp {
         x = x * scale;
         y = -y * scale; // 翻转Y轴使心形向上（因为屏幕坐标Y轴向下）
         
-        // 居中显示
-        const centerX = screenWidth / 2;
-        const centerY = screenHeight / 2;
+        // 计算气泡左上角坐标（使气泡中心对齐心形曲线点）
+        let finalX = centerX + x - popupWidth / 2;
+        let finalY = centerY + y - popupHeight / 2;
         
-        // 气泡左上角坐标（使气泡中心对齐心形曲线点）
-        const finalX = centerX + x - popupWidth / 2;
-        const finalY = centerY + y - popupHeight / 2;
+        // 确保坐标在屏幕范围内（考虑气泡尺寸）
+        finalX = Math.max(0, Math.min(finalX, screenWidth - popupWidth));
+        finalY = Math.max(0, Math.min(finalY, screenHeight - popupHeight));
         
-        // 确保坐标在屏幕范围内
         points.push({
-          x: Math.max(0, Math.min(finalX, screenWidth - popupWidth)),
-          y: Math.max(0, Math.min(finalY, screenHeight - popupHeight))
+          x: finalX,
+          y: finalY
         });
       }
       
@@ -214,8 +242,11 @@ class MysteryGiftApp {
       
       const screenWidth = window.innerWidth;
       const screenHeight = window.innerHeight;
-      const popupWidth = 200;
-      const popupHeight = 80;
+      
+      // 获取气泡的实际尺寸（响应式）
+      const popupSize = this.getPopupSize();
+      const popupWidth = popupSize.width;
+      const popupHeight = popupSize.height;
       
       let x, y;
       

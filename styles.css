@@ -182,10 +182,12 @@
     animation: popupFadeIn 0.5s ease-out;
     pointer-events: auto;
     max-width: 200px;
+    width: 200px;
+    min-height: 80px;
     text-align: center;
     border: 2px solid rgba(255, 255, 255, 0.3);
     z-index: 1;
-  
+
     transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
   
@@ -209,11 +211,11 @@
   }
   
   .popup-content {
-  
     font-size: 14px;
     font-weight: 600;
-  
     color: #333;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
   
   /* 浮动小球 */
@@ -263,7 +265,19 @@
   /* 响应式设计 */
   @media (max-width: 768px) {
     #main-title {
-      font-size: 2.5rem;
+      font-size: 2rem;
+    }
+    
+    .popup {
+      max-width: 150px;
+      width: 150px;
+      min-height: 60px;
+      padding: 12px 15px;
+      border-radius: 8px;
+    }
+    
+    .popup-content {
+      font-size: 12px;
     }
     
     .modal {
@@ -288,14 +302,14 @@
       padding: 10px 25px;
       font-size: 0.9rem;
     }
-  
+
     
     #float-balls {
       bottom: 20px;
   
       right: 20px;
     }
-  
+    
     
     .float-ball {
       width: 50px;
@@ -311,7 +325,19 @@
   
   @media (max-width: 480px) {
     #main-title {
-      font-size: 2rem;
+      font-size: 1.5rem;
+    }
+    
+    .popup {
+      max-width: 120px;
+      width: 120px;
+      min-height: 50px;
+      padding: 10px 12px;
+      border-radius: 6px;
+    }
+    
+    .popup-content {
+      font-size: 11px;
     }
     
     .modal {
