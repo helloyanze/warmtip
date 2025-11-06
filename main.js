@@ -47,7 +47,7 @@ class MysteryGiftApp {
     constructor() {
       this.isPlaying = false;
       this.popupCount = 0;
-      this.maxPopups = 400;
+      this.maxPopups = 100;
       this.popupInterval = null;
       this.audio = document.getElementById('bgMusic');
       this.popupLayer = document.getElementById('popup-layer');
@@ -366,16 +366,17 @@ class MysteryGiftApp {
       
       // 依次破裂，每个气泡间隔50毫秒
       popups.forEach((popup, index) => {
+        // 关键修改1：倒序延迟计算 = (总长度 - 1 - 当前索引) * 时间间隔
         setTimeout(() => {
           this.burstPopup(popup);
           
-          // 最后一个气泡破裂后重新开始弹出气泡
-          if (index === popups.length - 1) {
+          // 关键修改2：倒序后最后一个破裂的是索引为 0 的气泡（而非最后一个索引）
+          if (index === 0) {
             setTimeout(() => {
               this.resetAndRestart();
             }, 600);
           }
-        }, index * 50);
+        }, (popups.length - 1 - index) * 50); // 反转延迟顺序
       });
     }
     
