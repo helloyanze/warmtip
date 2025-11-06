@@ -217,7 +217,10 @@ class MysteryGiftApp {
     
     startExperience() {
       this.isPlaying = true;
-
+      // 如果是pc端，maxPopups为300，如果是移动端，maxPopups为100
+      this.maxPopups = window.innerWidth <= 768 ? 100 : 300;
+      console.log(this.maxPopups);
+      
       // 显示浮动小球（如果存在）
       if (this.floatBalls) {
         this.floatBalls.style.display = 'flex';
